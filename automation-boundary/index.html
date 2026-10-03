@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="我的四平台流水线里，选题、成稿、合规检查、博客上线全部自动跑，唯独三个发布按钮死也不交出去。这篇讲清划界的三个硬理由、两个极端的坑，和一套今天就能抄的五步划界法。">
+<title>一人公司的自动化边界：哪些活交给 AI，哪些死也留给人</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">一人公司的自动化边界：哪些活交给 AI，哪些死也留给人</h1>
+<div class="meta">2026-10-03 · <i style="font-style:normal;color:#C2622C">#信息差</i> <i style="font-style:normal;color:#C2622C">#自动化</i> <i style="font-style:normal;color:#C2622C">#一人公司</i></div>
+<p style="color:#5A4632">做一人公司三个月，我被问得最多的问题是：既然都自动化了，为什么发布还要自己点？这篇就把整条边界摊开写——哪些环节我放手了、为什么、哪些死也不放手、凭什么。全部从真实流水线里长出来，不是抄来的方法论。</p>
+<div class="astat"><div class="stat"><b>5</b><span>已全自动的环节</span></div><div class="stat"><b>30秒</b><span>每天留给人的发布动作</span></div><div class="stat"><b>3</b><span>死不自动的硬理由</span></div><div class="stat"><b>5步</b><span>可照抄的划界方法</span></div></div>
+<h2>先说结论：自动化的难点不是技术，是知道在哪里停手</h2>
+<p>我做一人公司三个月，跑着一条四平台内容流水线：一个博客、两个图文平台、一个视频平台。目前的自动化程度是这样的——从选题到成稿、到合规检查、到博客上线，全部自动跑，全程无人值守；但三个社交平台的发布按钮，我死也不交出去。</p>
+<p>这条线不是拍脑袋画的，是被三条硬理由逼出来的。今天把整个划界过程摊开：哪些自动了、为什么、剩下哪些死也不自动、以及一套你今天就能抄的五步划界法。</p>
+<blockquote>自动化的真正边界，不在技术能不能做到，而在出了事谁负责兜底。</blockquote>
+<h2>全自动的那一半：五个环节每天自己跑</h2>
+<ul>
+<li><b>选题情报</b>：每天自动抓取赛道热点，喂进选题队列，杜绝随机选题</li>
+<ul>
+<li><b>内容生产</b>：每天早上固定时间自动产出当日执行包——各平台草稿一次备齐</li>
+<ul>
+<li><b>合规检查</b>：收益承诺词、隔离敏感词、AI 创作标注，硬检查内置在流水线里，不过就停线</li>
+<ul>
+<li><b>博客发布</b>：达标长文自动生成页面、自动推送、自动线上验证，失败即停不重试</li>
+<ul>
+<li><b>失败兜底</b>：宁缺毋滥写进规矩——写不出达标内容就跳过当天，绝不凑数</li>
+</ul>
+<p>这套自动化的共同点很明确：<b>全都是对内的、可验证的、出错能自动发现的事</b>。生成错了大不了重来，推送失败立刻能看见，检查不过直接停——损失有上限，所以敢放手。</p>
+<h2>死也不自动的那一半：三个发布按钮</h2>
+<h3>理由一：平台条款不允许</h3>
+<p>主流社交平台均没有面向个人的官方发布接口。用脚本模拟人工点击发布，明确违反用户协议——这不是灰色地带，是白纸黑字的禁区。被抓一次就是封号，账号一封，几十天的积累清零重来。</p>
+<h3>理由二：账号是实名的</h3>
+<p>账号挂在真实身份下面。AI 代操作一旦出事故——发错内容、触发风控、被人举报——责任是不可逆的，没有「撤销」这个选项。</p>
+<h3>理由三：发布是不可逆的对外动作</h3>
+<p>我给自己焊了一条纪律：<b>一切对外发布、对外触达的动作，最后一步必须停在人手上</b>。对内生成一百次都无所谓，对外出手必须有人点头。这不是不信任 AI，是给整个系统装一道最终的保险丝。</p>
+<blockquote>省下 30 秒的复制粘贴，赌上一个实名账号和全部积累——这笔账怎么算都是亏的。</blockquote>
+<h2>中间地带：能自动的全部自动</h2>
+<p>画了这条线之后，我做的不是把另一半全靠手搓，而是把「人手」压缩到极限：</p>
+<ul>
+<li>选题、成稿、合规预检：全自动</li>
+<ul>
+<li>各平台草稿：每天自动备齐，装进一份执行包</li>
+<ul>
+<li>人要做的：打开执行包，复制、粘贴、点发布——几个平台加起来 30 秒到 5 分钟</li>
+</ul>
+<p>也就是说，<b>自动化的对象是准备环节，人保留的是扳机</b>。枪管、准星、子弹全部自动装配，扣不扣扳机、什么时候扣，永远是人的动作。</p>
+<h2>信息差：大多数人卡在两个极端</h2>
+<p>观察下来，做个人自动化的人普遍卡在两头：</p>
+<p>一头是<b>全手动党</b>：所有环节亲手做，一天两三小时耗在机械劳动上，最后死于疲惫——不是没能力，是注意力被流程吃光了。</p>
+<p>另一头是<b>全自动党</b>：听说 AI 能全自动运行，把包括发布在内的所有环节都交给脚本，结果轻则内容翻车，重则账号被封。他们赌的是不出事，而自动化的第一课恰恰是：<b>出事是必然的，边界是用来限制出事时的损失的</b>。</p>
+<p>真正稀缺的既不是勤奋也不是技术，是<b>分级判断</b>：哪些环节可以放手，哪些环节必须按住。这个判断没人能替你做，但方法可以抄——往下看。</p>
+<h2>你今天就能照做的五步划界法</h2>
+<ul>
+<li><b>第一步：把流程拆到环节。</b> 拿纸写出你的完整流程，从输入到输出，拆到不能再拆的最小动作</li>
+<ul>
+<li><b>第二步：每个环节问三个问题。</b> 出错了能自动发现吗？平台条款允许自动化吗？这个动作可逆吗？</li>
+<ul>
+<li><b>第三步：按答案分三档。</b> 三问全过且属于对内动作的，进全自动档；对外、不可逆、或条款有风险的，进人手档；中间地带做成「自动准备 + 人手执行」</li>
+<ul>
+<li><b>第四步：把边界写死。</b> 分档结果落成文档，白纸黑字——防止某天顺手越界，也防止换工具后边界悄悄漂移</li>
+<ul>
+<li><b>第五步：每 30 天回看一次。</b> 检查有没有因为自动化翻过车、漏过发，边界跟着实际数据调整，而不是跟着感觉调</li>
+</ul>
+<p>这套方法的核心不是「越自动越好」，是<b>让每一次放手都经过论证</b>。工具会过时，账号会换，但「在哪里停手」的判断力，是一人公司最不容易被替代的资产。</p>
+<hr>
+<p>下一篇写这条流水线里最硬的一块：几个自用工具怎么一步步 API 化，变成外部开发者也能调用的服务——照旧只写实录进度，不画饼。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
