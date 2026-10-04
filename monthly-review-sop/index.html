@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="临时盘点靠记忆、凭感觉、结论没法对比。这篇把盘点固化成 SOP：四档分类判定标准一次写死，五步流程每月 1 小时，三条踩坑细则，可直接照做。">
+<title>我的月度盘点 SOP：四档分类法可复制版（每月 1 小时）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">我的月度盘点 SOP：四档分类法可复制版（每月 1 小时）</h1>
+<div class="meta">2026-10-04 · <i style="font-style:normal;color:#C2622C">#装备实录</i> <i style="font-style:normal;color:#C2622C">#一人公司</i> <i style="font-style:normal;color:#C2622C">#盘点SOP</i></div>
+<p style="color:#5A4632">前两次盘点我的技能资产，都是临时起意：某天觉得家当乱，就盘一次。事后发现临时盘点有三个毛病——靠记忆、凭感觉、结论没法对比。所以这次我把盘点固化成了 SOP：固定时间、固定流程、固定判定标准。这篇就是 SOP 本身，四档分类法完整可复制版，每月花 1 小时，照做即可。</p>
+<div class="astat"><div class="stat"><b>1小时</b><span>每月盘点固定耗时</span></div><div class="stat"><b>4</b><span>资产档位（主力/备战/冻结/待清）</span></div><div class="stat"><b>30天</b><span>调用记录数据窗口</span></div><div class="stat"><b>2周</b><span>待清档启用计划死线</span></div></div>
+<h2>先回答一个问题：盘点为什么非要 SOP 化</h2>
+<p>临时盘点有三个毛病。</p>
+<p>第一，靠记忆。想不起来的资产，会被默认成「在用」——记忆天然偏乐观，它会把「用过一次」美化成「经常用」。</p>
+<p>第二，凭感觉。每次盘点心境不同、标准不同，同一个工具这次算主力、下次可能就被自己归进备战，结论全靠当天状态。</p>
+<p>第三，没法对比。两次盘点的间隔忽长忽短，数据窗口不统一，这次和上次的结论放在一起，看不出任何趋势。</p>
+<blockquote>盘点的价值不在「盘」这个动作，在「可比」。数据窗口不统一，你得到的就不是趋势，是情绪。</blockquote>
+<p>SOP 化之后，每次盘点输出同构的结果：同样的时间、同样的窗口、同样的判定标准。月与月之间可以并排对比，资产的增减第一次有了曲线。</p>
+<h2>四档分类法：判定标准一次写死</h2>
+<p>这是整套 SOP 的核心。四个档位，每档的判定标准和处理动作都提前写死，盘点当天只做归类，不做发明。</p>
+<h3>主力档</h3>
+<p>判定：最近 30 天被真实调用过，且预期下月继续用。依据只有调用记录，不是「我觉得我常用它」。</p>
+<p>动作：什么都不用做。它已经在干活了，别去打扰它。</p>
+<h3>备战档</h3>
+<p>判定：30 天内没调用，但对应的是低频刚需——比如「上线前审计」这类事前闸门。这类工具用不到反而是好事，就像灭火器，不能因为它没喷过就扔。</p>
+<p>动作：保留，但必须在台账里写清「它为什么值得养」。写不出来的，降级进待清档。</p>
+<h3>冻结档</h3>
+<p>判定：被更新的版本替代，旧版只剩历史价值。</p>
+<p>动作：归档。代码和文档移出工作目录，只留一个指针。旧版留在工作目录里的唯一作用，是每次打开时占你的注意力。</p>
+<h3>待清档</h3>
+<p>判定：30 天零调用，又不属于低频刚需。</p>
+<p>动作：给两周死线——到期给不出明确的启用计划，直接清。这一档是四档里唯一必须「动刀」的。</p>
+<blockquote>资产管理拼的不是勤快，是标准。标准写死，判断就不再内耗。</blockquote>
+<h2>月度盘点五步流程（全程 1 小时）</h2>
+<p>第一步，固定时间。设成每月最后一个周日 20:00，倒计时 1 小时，到点收工。盘点最怕磨蹭——时间一长，就会从「判断」滑向「欣赏自己的收藏」。</p>
+<p>第二步，拉数据。调出每个资产最近 30 天的真实调用记录，不用记忆补。数据不会陪你演戏。</p>
+<p>第三步，分档。逐条过四档判定。拿不准的宁可降档：在主力还是备战之间犹豫，就按备战算。</p>
+<p>第四步，动刀。待清档每条写上死线日期；冻结档当天归档；主力档不动。</p>
+<p>第五步，落盘。一张总表写进固定台账，和上个月的表并排放——哪些进了主力、哪些掉进待清，一眼可见。</p>
+<h2>三条细则，全是踩坑换来的</h2>
+<p>细则一，数据窗口只看 30 天。窗口拉长人会心软，「三个月前用过一次」也会被记忆翻译成「偶尔还在用」。</p>
+<p>细则二，待清档必须带死线。没有死线的清理名单，只是另一种形式的收藏夹——「决定要清理」的心理快感和「真的清理」的动作快感几乎一样，大脑会用前者替代后者，然后不了了之。</p>
+<p>细则三，盘点当天不建任何新东西。只做判断，不做建设。用「整理的快感」替代「产出的责任」，是一种更高级的拖延。</p>
+<h2>你今天就能照做的步骤</h2>
+<ul>
+<li>打开日历，建一个循环事件「月度盘点」，每月最后一个周日 20:00</li>
+<ul>
+<li>列出你全部的工具、订阅、技能、账号，一张表，有多少算多少</li>
+<ul>
+<li>查每个的最近 30 天使用记录，逐条标进四档</li>
+<ul>
+<li>给「待清」档的每一条写上死线日期</li>
+<ul>
+<li>把这张表存到固定位置——下月盘点时，先看这张表</li>
+<hr>
+<p>这套方法不挑人。你没有 61 个技能资产，也一定有工具箱：十几二十个订阅软件、一堆收藏夹、几个注册了没用的账号。它们面临同一个问题——养着要花注意力，扔了怕以后用得上。四档分类法解决的就是这个：让数据替你做决定，而不是让「万一以后用得上」替你做决定。</p>
+<p>下一篇照旧看队列。如果 judge/pdf 端点上线，就写 API 化实验全记录——照旧只写实录进度，不画饼。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
