@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="自动化流水线停了 13 天，重启全程不到 10 分钟。这篇如实记录这次停摆：什么坏了、什么没坏、为什么损失可控，以及一套今天就能抄的「防停摆三件套」。停摆原因不猜测不编造，只写可验证的事实。">
+<title>流水线停摆 13 天后重启：一人公司里什么会坏，什么不会</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">流水线停摆 13 天后重启：一人公司里什么会坏，什么不会</h1>
+<div class="meta">2026-10-18 · <i style="font-style:normal;color:#C2622C">#踩坑复盘</i> <i style="font-style:normal;color:#C2622C">#一人公司</i> <i style="font-style:normal;color:#C2622C">#系统设计</i></div>
+<p style="color:#5A4632">我的四平台流水线，上一次运行是 10 月 5 日，之后停了 13 天，今天早上重新跑了起来——你在读的这篇就是重启后的第一批产物。这篇不写怎么建系统，写一件更值钱的事：系统停了之后，为什么它没死。什么坏了、什么没坏、为什么损失比想象中小，全部如实交代，包括我并不知道停摆原因这件事。</p>
+<div class="astat"><div class="stat"><b>13天</b><span>流水线停摆时长（10-05 → 10-18）</span></div><div class="stat"><b>5</b><span>停摆期间始终在线的博客长文</span></div><div class="stat"><b>4次</b><span>唯一待制选题的累计顺延记录</span></div><div class="stat"><b>&lt;10分钟</b><span>从重启到全部产物就绪</span></div></div>
+<h2>先交代：这 13 天发生了什么</h2>
+<p>我的四平台内容流水线，上一次跑是 10 月 5 日。之后它停了 13 天——执行包断供，各平台草稿一天都没产。今天早上 8 点半，它重新跑了起来，就是你在读的这篇。</p>
+<p>停摆的原因，这篇里不猜。把原因编成一个好听的故事很容易，但我给自己立的规矩是：只写可验证的事实。可验证的事实有三条：博客站一直在线，停摆前部署的 5 篇长文全程可访问；选题队列、执行记录、纪律文件，一行都没丢；13 天里，对外发布端没有发生任何事故——因为发布按钮本来就不在自动化手里。</p>
+<blockquote>自动化缺席的日子里，真正在值守的是文件。</blockquote>
+<h2>重启第一小时：不补产量，先盘点</h2>
+<p>重启后的第一件事，不是加班补产量、把 13 天的坑填满，是盘点：什么坏了，什么没坏。</p>
+<p>先说坏的。坏的只有一样：产量。13 天的执行包没有产出，各平台的更新断了。</p>
+<p>再说没坏的，这个清单反而长得多：</p>
+<ul>
+<li><b>博客站</b>：托管在不依赖流水线的地方，5 篇长文始终在线，搜索引擎照常抓取；</li>
+<ul>
+<li><b>选题队列</b>：唯一待制选题连同四次顺延记录原样躺着，重启后取数规则照旧；</li>
+<ul>
+<li><b>执行记录</b>：每次运行做了什么、卡在哪、下次从哪续，全部留档，重启等于接着上一次干；</li>
+<ul>
+<li><b>合规规则与纪律文件</b>：什么词不能碰、什么题不能做、写不达标怎么办，全写在文件里，不写在任何人脑子里。</li>
+<blockquote>坏掉的只是「每天产草稿」这一个环节。系统的骨架根本不在自动化程序里，在文件里。</blockquote>
+<h2>为什么损失比想象中小</h2>
+<p>13 天断更，放在大多数内容账号身上等于一次重伤。这次损失可控，复盘下来靠的是三个此前做对的设计。</p>
+<h3>一、状态落盘，不依赖会话</h3>
+<p>选题在文件里，记录在文件里，标准在文件里。任何一个环节缺席——哪怕是我自己缺席——下一次打开文件就能接着干。如果这些状态存在某个程序的内存里、某段对话的上下文里，13 天之后它们就真的没了。</p>
+<h3>二、发布在人手上，停摆期零线上风险</h3>
+<p>这条流水线从第一天起就焊死一条铁律：一切对外发布，最后一步停在人手上，自动化只负责备草稿。这带来一个意外收益：停摆期间不存在任何「自动发出的东西」需要收拾。断供的代价被锁死在「少更新」这一件事上，不会溢出成事故。</p>
+<h3>三、宁缺毋滥，断供不等于变质</h3>
+<p>重启当天最大的诱惑是什么？猛发一堆凑数内容，把窟窿填上。我的规矩直接写在流水线里：写不达标就跳过，绝不凑。今天这条线只产出一个选题——不多，但每一个字都有出处。</p>
+<blockquote>断更要命的不是掉的流量，是自己先信了「这条线死了」，然后用凑数把它彻底做死。</blockquote>
+<h2>信息差：一人公司最贵的资产是「缺席可恢复」</h2>
+<p>观察下来，大多数人把系统建在「人」身上：流程记在脑子里，状态存在聊天记录里，关键操作依赖某台设备、某个软件、某次灵感。这样的系统，人一缺席就散架——而人一定会缺席：生病、出差、状态崩了、单纯累了。</p>
+<p>真正抗造的系统建在「文件」上：选题是文件，标准是文件，记录是文件，执行的人只是文件的读者和续写者。判断标准特别简单：<b>把你从系统里完全抽走 30 天，另一个人拿着你留下的文件，能不能把它跑起来？</b> 能，这叫缺席可恢复；不能，你拥有的就不是系统，是一份随时会断的工作。</p>
+<p>这次停摆还给了我们一个意外的副产品：一次免费的压力测试。5 篇长文在无人值守的情况下持续在线、持续被搜索引擎抓取——博客作为「大本营」的价值，恰恰体现在流水线死掉的时候它还活着。选大本营的标准从来不是平时多好看，是出事的时候它还在。</p>
+<h2>两个反直觉的收获</h2>
+<p>收获一：停摆暴露了系统的真话。平时流水线天天在跑，我永远搞不清哪些环节是彼此依赖的、哪些是各活各的。这 13 天等于把系统泡在冷水里做了一次实验——结论很清楚：自动化环节和博客、文件、纪律之间的依赖关系，比我以为的弱得多。平时看不出来，是因为它们从来没被单独测试过。</p>
+<p>收获二：重启比坚持更值得设计。大多数人只设计「怎么让系统一直跑」，很少设计「怎么让它断了之后跑回来」。前者靠资源和运气，后者靠结构。这次 10 分钟的重启，成本其实花在 13 天之前的留档上——事后看起来是纪律，事前看只是每次多写了三行字。</p>
+<h2>你今天就能照做的「防停摆三件套」</h2>
+<ul>
+<li>第一步：把状态写进文件。选题队列、执行记录、判定标准，全部落成固定路径的文件，不依赖记忆、不依赖某次会话；</li>
+<ul>
+<li>第二步：每次执行都留档。做了什么、卡在哪、下次从哪续，三行字也要写——重启成本取决于台账质量，不取决于意志力；</li>
+<ul>
+<li>第三步：做一次缺席测试。假设你缺席 30 天，拿着自己的文件走一遍流程，走不通的那一步，就是要补台账的地方。</li>
+<hr>
+<p>这次停摆没有让我给自动化加码，反而让我更确定一件事：一人公司的保险，不是永不宕机的系统，是宕机之后十分钟就能接上的台账。</p>
+<p>下一篇照旧看队列。如果端点前提能核实，就写顺延四次的 API 化实验全记录；仍不能核实，就继续顺延——经此一役，「流水线不会因为某条选题卡住而停摆」这句话，算是被 13 天的停摆反向验证过了。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
