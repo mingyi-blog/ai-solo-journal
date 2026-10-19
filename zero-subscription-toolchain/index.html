@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="我的四平台流水线，工具现金成本停在 0 元/月已经三个月。这篇把账本摊开：三层免费替代、免费的三条真实代价、以及写死在账本里的三条付费触发线。不吹免费万能，只给可验证的实录。">
+<title>一人公司工具账本：我怎么做到 ¥0/月，以及免费的真实代价</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">一人公司工具账本：我怎么做到 ¥0/月，以及免费的真实代价</h1>
+<div class="meta">2026-10-19 · <i style="font-style:normal;color:#C2622C">#信息差</i> <i style="font-style:normal;color:#C2622C">#一人公司</i> <i style="font-style:normal;color:#C2622C">#工具账本</i></div>
+<p style="color:#5A4632">一个人做公司，最先被劝花钱的地方就是工具。教程看多了，好像不买几个订阅就开不了工。我把自己的工具账本盘了一遍：托管、生产、渲染，工具现金成本每月 0 元，持续三个月。这篇不吹免费万能——恰恰相反，免费的真实代价一条条写清，再给我定的三条付费触发线。全部来自真实运行的流水线，可以验证。</p>
+<div class="astat"><div class="stat"><b>¥0/月</b><span>工具现金成本（连续三个月）</span></div><div class="stat"><b>3层</b><span>免费替代（托管/生产/判断）</span></div><div class="stat"><b>3条</b><span>免费的真实代价</span></div><div class="stat"><b>3条</b><span>写死的付费触发线</span></div></div>
+<h2>先亮账本：一张 0 元的月账单</h2>
+<p>一个人做公司，最先被劝花钱的地方就是工具。教程看多了，好像不买几个订阅、不上几套付费软件，这事就没法开工。我把自己的工具账本盘了一遍：从博客托管到内容生产再到视频渲染，工具现金成本是每月 0 元，这个状态已经持续三个月。</p>
+<p>逐层摊开。托管这一层，博客放在 GitHub Pages 上，零费用，连域名都不用买；这三个月里只出现过发布后几分钟的 CDN 缓存延迟，没有一次真正的宕机。生产这一层，写作、脚本、多平台改写，全是我自己搭的流程，跑在本地环境里，没有买过任何订阅；视频渲染也是本地方案，配音、字幕、合成一条命令跑完。分发这一层，各平台发布本来就不花钱，花的是每天 30 秒复制粘贴的时间。三层加起来，就是一张 0 元的月账单。</p>
+<blockquote>一人公司早期最稀缺的不是钱，是把免费方案用透的耐心。</blockquote>
+<h2>三层免费替代：钱到底省在哪里</h2>
+<h3>第一层：用免费基础设施替代付费托管</h3>
+<p>静态内容——文章、页面、文档——根本不需要买服务器。GitHub Pages、对象存储的免费额度，足够一个人用很久。很多人上来就买云服务器，一个月几十上百块，跑的其实是一个没有人访问的静态站。这是新手段最常见的白花钱：为想象中的流量规模，预付了想象中的基础设施。</p>
+<h3>第二层：用本地工具替代云端订阅</h3>
+<p>能本地跑的就不上云。我的经验是：先在本地手搓一个能跑的版本，用满两周，再判断这个能力是不是真的高频刚需——是，再考虑付费升级；不是，一个免费的半成品也够用了。绝大多数工具需求死在这一步：你以为要用很多年，实际上两周后就想不起来了。</p>
+<h3>第三层：用判断力替代工具（最值钱的一层）</h3>
+<p>很多付费工具卖的其实是「决策」——帮你决定写什么、什么时候发、数据好不好。但这些判断恰恰是一人公司最不该外包的部分。我的选题有固定队列，数据有固定台账，判断标准全部写死在文件里。判断力免费，但要求你肯花时间把规则写下来。规则写下来的那一刻，工具 list 里就少了一个为「帮你决定」付费的订阅。</p>
+<h2>免费的真实代价：三条，挨条说</h2>
+<p>别把这篇读成「免费颂」。免费方案的账，另一面长这样。</p>
+<p>代价一：时间换钱。免费方案的搭建成本全部折算成你的时间。博客自动部署那套脚本，第一次调通花了不止一个晚上。按市场时薪折算，它未必比付费方案便宜——它便宜的前提，是这套东西你会一直用下去，成本被长期摊薄。</p>
+<p>代价二：没有客服，文档就是一切。出问题只能自己啃文档、查社区、翻源码。上个月博客部署的验证环节卡过一次，排查花掉的时间如果折算成客服工时，早超了任何订阅费。免费方案对一个人的要求是：你得有耐心做自己的技术支持。</p>
+<p>代价三：没有捷径。付费工具给的「一键」「模板」「智能推荐」，本质是把新手坑提前填平。手搓方案必须自己把每个坑踩一遍——这是学费，不是浪费，但确实慢。</p>
+<blockquote>免费便宜的前提是长期用、成本被摊薄；只用两周就吃灰的东西，免费反而是最贵的。</blockquote>
+<h2>三条付费触发线：按时付费、按瓶颈付费</h2>
+<p>所以我的立场不是「永远免费」，是「按时付费、按瓶颈付费」。三条触发线写死在账本里：</p>
+<ul>
+<li><b>触发线一（真瓶颈付费）</b>：免费方案连续两周成为流水线的真实瓶颈，且没有免费替代可换——为这一个瓶颈付费，不是为「可能用到」付费。</li>
+<ul>
+<li><b>触发线二（高频刚需付费）</b>：某个能力被 30 天调用记录验证为高频刚需，本地版维护成本已超过订阅费——换付费版，把时间省下来。</li>
+<ul>
+<li><b>触发线三（确定性付费）</b>：涉及合规与安全的环节，免费方案能力不够时，优先为确定性付费——这类钱省不得。</li>
+</ul>
+<p>三条线之外的所有付费冲动，一律写进「观察区」，冷静两周再说。三个月下来，观察区里没有一条活到了付费那天——大部分「刚需」在第二周就自己消失了。</p>
+<h2>你今天就能照做的五步</h2>
+<ul>
+<li>第一步：把过去三个月的所有工具支出列成一张表，多少条都行，先列全；</li>
+<ul>
+<li>第二步：每条旁边写上真实使用次数——查记录，不凭印象；</li>
+<ul>
+<li>第三步：标出「付了费但 30 天没用过」的条目，这类是第一优先处理对象；</li>
+<ul>
+<li>第四步：给每个还在用的免费方案写一句「它省了什么、代价是什么」，代价超过省下的就进观察区；</li>
+<ul>
+<li>第五步：把三条付费触发线抄下来贴在工作区，之后每一次想付费，先对线再掏钱。</li>
+</ul>
+<p>那张支出表会直接告诉你：下一次该不该掏钱。工具账单的数字不重要，重要的是每一笔钱都花在已经验证的瓶颈上，而不是花在「开工的仪式感」上。</p>
+<hr>
+<p>下一篇照旧看队列。如果端点前提能核实，就写顺延五次的 API 化实验全记录；仍不能核实，就继续顺延——账本会继续记，流水线不会停。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
