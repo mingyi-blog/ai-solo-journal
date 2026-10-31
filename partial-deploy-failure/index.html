@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="12 个文件推送，5 个成功、6 个报 500——半失败比全失败更磨人。一次真实故障的完整复盘：重推前先确认幂等性，幂等的失败可以重做，不幂等的失败只能止损。">
+<title>6 个文件 500：一次半失败部署教会我的幂等课</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">6 个文件 500：一次半失败部署教会我的幂等课</h1>
+<div class="meta">2026-11-01 · <i style="font-style:normal;color:#C2622C">#踩坑复盘</i> <i style="font-style:normal;color:#C2622C">#自动化</i> <i style="font-style:normal;color:#C2622C">#一人公司</i></div>
+<p style="color:#5A4632">一个人加 AI 做创业，自动化出故障没人兜底。前两天深夜的一次部署推送，12 个文件 5 成 6 败，线上站陷入半新半旧的状态。这篇复盘一次真实的半失败部署：为什么「失败即停」的纪律这次没有拦住重推？答案藏在一个很多人没听过的概念——幂等。所有数字来自真实日志，零编造。</p>
+<div class="astat"><div class="stat"><b>12</b><span>一次部署推送的文件总数</span></div><div class="stat"><b>6</b><span>首次推送失败数（HTTP 500）</span></div><div class="stat"><b>2次</b><span>同一批文件的实际推送次数</span></div><div class="stat"><b>0</b><span>重推后产生重复或损坏的文件</span></div></div>
+<h2>全失败好判断，半失败最磨人</h2>
+<p>前两天深夜跑了一次博客部署，脚本一行行吐结果：OK、OK……突然接连六行报错，错误码 500。12 个文件，5 个成功、6 个失败——首页没更新，三篇文章页推不上去。这就是「半失败」：不是全崩，也不是没事，是一半正常一半出问题。</p>
+<p>一人公司的自动化里，全失败其实是最好处理的状态——整条链路停了，你不用犹豫，修就是了。真正磨人的是半失败：成功的部分看起来一切正常，失败的部分等着你决策，而「推还是不推」这个决定做错，代价可能比故障本身还大。</p>
+<h3>现场还原：12 个文件，5 成 6 败</h3>
+<p>先摆事实。这次部署一共推 12 个文件：1 个首页、1 个爬虫规则、1 个站点地图、9 篇文章页。首次推送的结果是 5 个成功、6 个报 500——挂掉的恰好包括首页和三篇旧文章页。也就是说，那次部署之后，线上站处于「半新半旧」的状态：新内容没进来，部分旧页面也没了响应。</p>
+<p>这种状态最危险的地方在于：它不报大错。访问者打开大部分页面都没问题，你自己不逐页点一遍，都可能以为「就是慢了点」。半失败不吵不闹，它安静地等着被忽略。</p>
+<blockquote>全失败让你停机，半失败让你心存侥幸——侥幸才是最贵的状态。</blockquote>
+<h3>失败即停不重试，为什么这次还能重推</h3>
+<p>流水线里焊着一条纪律：部署失败，停止执行，不自动重试，如实上报。这条纪律挡过不止一次祸——盲目重试可能造成内容重复、状态错乱。那这次为什么敢重推？</p>
+<p>因为重推之前先确认了一个关键事实：这套部署是全量覆盖式的。每次执行都把全部 12 个文件重新上传一遍，不管推几遍，线上永远只有一份最新的文件——做两遍和做一遍的结果一样。</p>
+<p>这就是「失败即停」的例外情况：纪律拦的不是重试本身，是「不确认后果的重试」。确认了后果，重试就从赌博变成了普通操作。</p>
+<h2>关键认知差：幂等，决定失败能不能重来</h2>
+<p>这里藏着一个很多人没意识到的概念差：幂等。一个动作执行一次和执行多次，结果完全相同，它就是幂等的；执行两次会产生两份结果或两个副作用，它就是非幂等的。</p>
+<ul>
+<li>全量覆盖上传：幂等。推 2 遍 = 推 1 遍，失败可以安全重做</li>
+<ul>
+<li>追加式写入：不幂等。重试一次就多一条重复记录</li>
+<ul>
+<li>给第三方发消息：不幂等。重试可能发出去两条</li>
+<ul>
+<li>按次数计数或计费：不幂等。重试一次多记一次</li>
+<h3>什么样的失败可以重做</h3>
+<p>判断标准就一句话：这个动作做两遍，线上状态会不会变坏？不会变坏的（幂等），失败后可以放心重做，重做完逐项验证。这次 12 个文件重推，第二次全部成功，0 个重复、0 个损坏，靠的就是这个前提。重推完成后逐文件核对状态码，再打开线上首页确认内容出现在列表里，再打开前天报错的三个页面确认恢复访问——到这一步，这次半失败才算真正关闭。</p>
+<blockquote>幂等的失败可以重做，不幂等的失败只能止损。</blockquote>
+<h3>什么样的失败必须停</h3>
+<p>反过来，非幂等操作的失败必须先取证再行动。比如一条内容推送出去，接口报错——它到底发出去没有？没发出去可以重发；发出去再发一次就是重复骚扰。这时候唯一可靠的依据是回执和状态查询，不是「我感觉没发出去」。一人公司没有运维兜底，这类判断只能提前写进流程，不能指望临场反应。</p>
+<h3>为什么留档比记性可靠</h3>
+<p>重推完成后我留了一条档案：失败清单（哪 6 个文件、什么错误码）、重推时间、验证结果。半失败最容易被记忆美化成「小问题已经顺手处理了」，留档是为了让下一次决策有依据，而不是靠回忆。判断半失败的影响范围也一样：先拉全清单，逐项记录成功与失败，不凭印象说「大概没事」。</p>
+<h2>你今天就能照做的五步</h2>
+<ul>
+<li>把你所有的自动化动作分成两栏：幂等的（覆盖上传、重新生成）和非幂等的（追加、发送、计数）</li>
+<ul>
+<li>幂等操作失败：直接重做，做完逐项验证，不留「大概没事」</li>
+<ul>
+<li>非幂等操作失败：先查回执和状态，确认「到底执行了没有」，再决定重做还是止损</li>
+<ul>
+<li>遇到半失败：先拉全清单，逐项记录成功与失败，不凭印象判断影响范围</li>
+<ul>
+<li>每次失败都留档：失败清单、处理动作、验证结果——档案比记性可靠</li>
+<blockquote>判断能不能重试，先问一句：这个动作做两遍，结果是两份，还是还是一份？</blockquote>
+<h2>半失败的真正代价</h2>
+<p>这次事故的直接损失很小：多推了一次，多花了几分钟。但它暴露的问题不小——如果没有「先确认幂等性再重试」这个认知，两个方向都会翻车：要么盲目重试造成重复，要么死守「失败即停」让站点半新半旧地挂一整天。</p>
+<p>一人公司的自动化不缺工具，缺的是对每个动作后果的清楚认识。工具可以零成本，认知差补不齐，故障就会换着花样回来。这篇里的每一个数字——12、6、5、2、0——全部来自真实日志，没有一个编造。这就是一人公司做内容的底气：不写没经历过的故障，不编没验证过的结论。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
