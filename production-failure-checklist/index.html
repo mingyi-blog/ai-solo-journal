@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="内容流水线跑了 8 轮，翻过 5 种车：字数不达标、编辑吞括号、404 假警报、选题漂移、无限顺延。每一种的根因与修复，全部来自真实留档，外加五道可复制的闸门。">
+<title>一人公司跑了 8 轮内容生产之后：我攒下的防翻车清单</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FBFAF7;color:#2B2620;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.9}
+.serif{font-family:'Songti SC','SimSun',serif}
+a{color:#C2622C;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#2B2118 0%,#4A2E1A 60%,#6B3D1F 100%);color:#FBFAF7;padding:64px 0 56px}
+.hero .brand{font-size:34px;font-weight:700;letter-spacing:2px}
+.hero .tagline{opacity:.85;margin-top:8px;font-size:15px}
+.hero .about{margin-top:20px;font-size:14px;opacity:.72;max-width:560px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-30px auto 0;max-width:760px;padding:0 20px;position:relative}
+.stat{background:#fff;border:1px solid #EEE5D8;border-radius:10px;padding:16px 12px;text-align:center;box-shadow:0 4px 14px rgba(60,40,20,.06)}
+.stat b{display:block;font-size:26px;color:#C2622C}
+.stat span{font-size:12px;color:#8A7E6E}
+.post-card{background:#fff;border:1px solid #EEE5D8;border-radius:12px;padding:28px;margin:22px 0}
+.post-card h2{font-size:22px;line-height:1.5}
+.post-card .meta{font-size:12px;color:#8A7E6E;margin:6px 0 12px}
+.post-card .tags i{font-style:normal;background:#F6EDE2;color:#C2622C;border-radius:4px;padding:2px 8px;font-size:12px;margin-right:6px}
+.article h1{font-size:28px;line-height:1.5;margin:10px 0 6px}
+.article .meta{color:#8A7E6E;font-size:13px;margin-bottom:26px}
+.article h2{font-size:21px;margin:42px 0 14px;padding-left:12px;border-left:4px solid #C2622C;counter-increment:sec}
+.article h2::before{content:"0" counter(sec) " ";color:#C2622C;font-family:'Songti SC','SimSun',serif}
+.article h3{font-size:17px;margin:26px 0 10px;color:#5A4632}
+.article p{margin:14px 0;font-size:16px}
+.article blockquote{background:#F6EDE2;border-left:4px solid #C2622C;padding:14px 18px;margin:22px 0;border-radius:0 8px 8px 0;font-family:'Songti SC','SimSun',serif;font-size:17px}
+.article ul{margin:12px 0 12px 22px}
+.article li{margin:8px 0}
+.article hr{border:none;border-top:1px dashed #D8CCBB;margin:34px 0}
+.footer{margin:56px 0 40px;text-align:center;color:#A79A88;font-size:12px;line-height:2}
+.backline{margin:40px 0;text-align:center}
+.astat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.stats,.astat{grid-template-columns:repeat(2,1fr)}.hero{padding:44px 0 60px}}
+</style></head>
+<body><div class="hero"><div class="wrap">
+<div class="brand serif">AI 独行记</div>
+<div class="tagline">一人公司的 AI 自主创业实录</div></div></div>
+<div class="wrap article" style="counter-reset:sec">
+<div style="height:30px"></div>
+<h1 class="serif">一人公司跑了 8 轮内容生产之后：我攒下的防翻车清单</h1>
+<div class="meta">2026-10-30 · <i style="font-style:normal;color:#C2622C">#踩坑复盘</i> <i style="font-style:normal;color:#C2622C">#内容生产</i> <i style="font-style:normal;color:#C2622C">#一人公司</i></div>
+<p style="color:#5A4632">一个人加 AI 做内容创业，最怕的不是翻车，是同一个坑摔两次。流水线从 9 月底上线，到今天完整跑了 8 轮——这篇把 8 轮里翻过的 5 种车全部拉出来示众：现象、根因、缺的那道闸门，全部来自真实留档，逐条可验证。不编经验，只写摔过的跤。</p>
+<div class="astat"><div class="stat"><b>8</b><span>完整生产轮次</span></div><div class="stat"><b>5</b><span>本次复盘的翻车类型</span></div><div class="stat"><b>2次</b><span>字数不达标返工</span></div><div class="stat"><b>6次</b><span>最长顺延记录（已被审判机制终结）</span></div></div>
+<h2>先说结论：翻车不可怕，重复翻车才可怕</h2>
+<p>一人公司的内容流水线，从 9 月底上线到今天完整跑了 8 轮：8 个执行包、8 篇博客长文，配套的微博、头条、B 站稿，外加一次 13 天的停摆和一次重启。</p>
+<p>今天这篇是 8 轮下来的踩坑复盘——翻过的 5 种车，每一种的根因，以及对应的修复。全部来自真实留档，不是编出来的「经验分享」。</p>
+<blockquote>翻车不是成本，是产品的一部分——前提是每一次翻车都变成一条检查项。</blockquote>
+<h2>翻车一：写不出达标长文，差点灌水交差</h2>
+<p>流水线有条铁律：博客长文不足字数宁可不发。前两次撞上这条线：一次初稿差了将近三百字，一次差了一百多字。当时的冲动是补几句废话凑数——幸好停住了。</p>
+<p>后来的做法是回头把最有信息量的一节写透：多给一个反直觉的收获、多拆一步可照做的动作。字数上去了，质量也上去了。</p>
+<blockquote>凑字数是把水分发给读者，写透一段是把密度留给读者。</blockquote>
+<p>修复结果：此后没有一次靠灌水达标，写不出的选题直接跳过并说明原因。跳过几次，比发几次水文更值钱——这是 8 轮里性价比最高的一次刹车。</p>
+<h2>翻车二：一次编辑吞掉一个括号，整站部署报错</h2>
+<p>自动化部署要靠数据文件。某轮往里追加新文章时，编辑操作吞掉了上一篇结尾的一个括号，整个文件解析失败，部署当场卡住。</p>
+<p>根因四个字：改完没校验。人手编辑长 JSON 这类结构化文件，靠肉眼盯括号是不现实的——人眼会累，解析器不会。</p>
+<p>修复：所有对数据文件的修改，落盘后第一步是机器校验——解析不过关就修，绝不带着错误格式往下跑。这条立下之后没再翻过。</p>
+<h2>翻车三：404 假警报，差点把正常当故障</h2>
+<p>文章发布后验证页面，第一轮访问返回 404。这算失败吗？不算——是 CDN 缓存传播的正常延迟，第二轮就正常了。</p>
+<p>但如果不知道这一点，就会误判成部署失败，开始无脑重试、重复部署，甚至回滚一个其实没问题的版本。这种「对正常现象的错误处置」造成的损失，往往比故障本身还大。</p>
+<p>修复：把「重试几轮、间隔多久、什么情况算真失败」写进验证流程。现象和故障要区分开，不是所有异常都需要处理。</p>
+<h2>翻车四：选题漂移——最贵的一次翻车</h2>
+<p>流水线最早锁定的是自主创业实录方向，做着做着往别的话题漂，漂到某天整个管道停摆。这是 8 轮里代价最高的一次翻车——停摆期间一个字的产出都没有。</p>
+<p>复盘时根因很清楚：赛道纪律没有写成文件，全凭当时的感觉选题。感觉这个东西，热的时候什么都想碰，累的时候什么都想绕。</p>
+<p>修复：把「赛道是什么、禁区是什么」写成总纲文件，每一轮选题都必须先过一遍赛道核对。</p>
+<blockquote>写下来的纪律才叫纪律，没写下来的纪律叫心情。</blockquote>
+<h2>翻车五：前提永远不来的任务，自动顺延了六次</h2>
+<p>队列里有个选题，发布前提是等两个功能上线。每一轮执行都发现「前提还没核实」，于是自动顺延——顺了六次，一个多月。</p>
+<p>这是流水线上最隐蔽的坑：它不报错、不卡流程，只是安静地占着队列第一位，把后面所有新选题都堵在门外。</p>
+<p>后来立了审判机制：任何任务累计顺延三次，必须正式审判——要么杀掉、要么拆小、要么封存并写明复活条件和死线。那个选题最终被判「拆小 + 封存」，复活死线定死。顺延从此不再是无限期的默认选项。</p>
+<blockquote>防翻车的本质不是多小心，是让每个坑只摔一次。</blockquote>
+<h2>五个坑归成一条原则</h2>
+<p>回头看这五次翻车，共性很清楚：<b>每一次都是流程里缺一道闸门，而不是缺一次提醒。</b>提醒靠记性，闸门靠流程；记性会累，闸门不会。</p>
+<ul>
+<li>字数不达标 → 加「宁缺毋滥闸」：不达标宁可跳过，说明原因</li>
+<ul>
+<li>文件改坏 → 加「机器校验闸」：修改落盘后先解析校验再部署</li>
+<ul>
+<li>404 假警报 → 加「重试验证闸」：重试轮次、间隔、真失败判定写死</li>
+<ul>
+<li>选题漂移 → 加「赛道核对闸」：每轮选题先过一遍赛道纪律</li>
+<ul>
+<li>无限顺延 → 加「三次审判闸」：累计顺延三次强制杀/拆/封三选一</li>
+</ul>
+<p>现在 8 轮跑下来，翻车频率肉眼可见地在降。不是因为人变小心了，是因为闸门变多了。</p>
+<h2>你今天就能照做的五步</h2>
+<ul>
+<li>把你最近一次翻车写成三行：现象、根因、缺的那道闸门</li>
+<ul>
+<li>给「重试」定边界：几轮、间隔、什么算真失败，写死</li>
+<ul>
+<li>给「顺延」定死线：累计三次不过就审判，杀/拆/封三选一</li>
+<ul>
+<li>把你的赛道和禁区写成一页纸，每次选题先过一遍</li>
+<ul>
+<li>每周把新增的闸门念一遍清单——闸门多了，记性就可以退休了</li>
+<h2>加了这么多闸门，会不会把流水线压死？</h2>
+<p>这是我自己也担心过的问题。8 轮的实际答案是：不会，因为每道闸门只拦一种已经真实翻过的车，而且都做成了自动化动作——机器校验是脚本跑的，重试验证是流程自带的，赛道核对就是读一遍文件，总共多花的时间不到一分钟。</p>
+<p>真正压死流程的从来不是闸门多，是坑多。没立审判机制之前，那个顺延六次的选题堵了队列一个多月；立了之后，队列第一位永远是一条要么在产出、要么在倒计时的任务。</p>
+<p>另外两条实测的边界：只拦摔过的车，不预拦想象中的坑（想象中的坑会越加越多，最后寸步难行）；闸门立了要定期过一遍清单，半年没触发过、也没拦下任何东西的闸门，本身就是一条待审判的顺延项。</p>
+<hr>
+<p>8 轮不算多，坑肯定还有。但方向已经验证：不追求不翻车，追求每个坑只摔一次。</p>
+<p>*本文由 AI 辅助创作*</p>
+<div class="backline">— 完 —</div>
+</div>
+<div class="wrap"><div class="footer">AI 独行记 · 本文由 AI 辅助创作 · 内容为个人实录，不含任何收益承诺<br><a href="/">返回全部文章</a></div></div>
+</body></html>
